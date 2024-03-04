@@ -209,25 +209,19 @@ function getCountWeekendsInMonth(month, year) {
  */
 function getWeekNumberByDate(date) {
   const inputTime = date.getTime();
-
-  const firstDayOfYear = new Date(date.getFullYear(), 0, 1);
-
-  const dayOfWeek = firstDayOfYear.getDay();
-
-  const firstSaturdayOfYear = new Date(
-    firstDayOfYear.getFullYear(),
-    firstDayOfYear.getMonth(),
-    firstDayOfYear.getDate() + (6 - dayOfWeek)
+  const firstDateInYear = new Date(date.getUTCFullYear(), 0, 1);
+  const firstSaturdayInYear = new Date(
+    date.getUTCFullYear(),
+    0,
+    1 + (6 - firstDateInYear.getUTCDay())
   );
 
   let weekCount = 1;
-
-  const curSaturday = new Date(firstSaturdayOfYear);
+  const curSaturday = firstSaturdayInYear;
   while (curSaturday.getTime() < inputTime) {
     weekCount += 1;
-    curSaturday.setDate(curSaturday.getDate() + 7);
+    curSaturday.setUTCDate(curSaturday.getUTCDate() + 7);
   }
-
   return weekCount;
 }
 
